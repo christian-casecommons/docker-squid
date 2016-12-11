@@ -39,6 +39,8 @@ Creating squid_squid_1
 => Squid is running at http://172.16.154.128:32779
 ```
 
+After building the image, you can test the image locally by configuring your browser or environment to use the Squid proxy URL output displayed at the end of the `make release` command.
+
 ### Tagging the Image
 
 After building the image, you can tag the image using the `make tag` or `make tag:default` command:
@@ -71,6 +73,7 @@ d93c9b2eda1f: Pushed
 ...
 ...
 => Publish complete
+```
 
 ### Cleaning up
 
@@ -95,6 +98,7 @@ Deleted: sha256:a4308d3bb2b335a505bbdb7b79fa5ddbe4e773919260a95dc8b497612d7df3ab
 Deleted: sha256:9d3e54d0d7900c6d93e7081613e5229f266d919dc105f8d848a57262f1058326
 Deleted: sha256:e800bfff628f614dabb01d7b6ea7438deb4242cf24909a554808499b2ee6870b
 => Clean complete
+```
 
 ## Runtime Configuration
 
@@ -124,8 +128,8 @@ importexport.amazonaws.com
 
 The following table defines environment variables control the configuration of containers created from this image.
 
-| Environment Variable | Required | Default Value                           | Description                                                                                                                                               | Examples                     |
-|----------------------|----------|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------|
-| SQUID_WHITELIST      | No       |                                         | Comma separated list of whitelisted domains.  Note that this whitelist adds the default whitelist that permits access to AWS services.                    | .casecommons.org,.google.com |
-| AWS_REGIONS          | No       | us-west-2                               | Comma separate list of regions that the whitelist should perform for access to AWS services.  This only affects AWS services that are regional in nature. | ap-southeast-2,us-west-2     |
-| ALLOWED_CIDRS        | No       | 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 | Comma separated list of allowed CIDR ranges permitted to use the Proxy.  This typically should be set to the CIDR block range of your VPC.                | 192.168.200.0/20             |
+| Environment Variable | Required | Default Value  | Description                                                                                                                                               | Examples                     |
+|----------------------|----------|----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------|
+| SQUID_WHITELIST      | No       |                | Comma separated list of whitelisted domains.  Note that this whitelist adds the default whitelist that permits access to AWS services.                    | .casecommons.org,.google.com |
+| AWS_REGIONS          | No       | us-west-2      | Comma separate list of regions that the whitelist should perform for access to AWS services.  This only affects AWS services that are regional in nature. | ap-southeast-2,us-west-2     |
+| ALLOWED_CIDRS        | No       | RFC1918 ranges | Comma separated list of allowed CIDR ranges permitted to use the Proxy.  This typically should be set to the CIDR block range of your VPC.                | 192.168.200.0/20             |
