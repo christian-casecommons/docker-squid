@@ -30,7 +30,7 @@ release:
 	${INFO} "Squid is running at http://$(DOCKER_HOST_IP):$(call get_port_mapping,$(RELEASE_ARGS),squid,3128)"
 
 # Executes a full workflow
-all: clean release tag-default publish clean
+all: clean release tag-default login publish clean
 
 # Cleans environment
 clean:
