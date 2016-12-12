@@ -6,7 +6,7 @@ HEALTHCHECK --interval=3s --retries=20 CMD nc -z localhost 3128
 
 # Install packages
 RUN echo "http://nl.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
-    apk add --no-cache --update bash confd squid netcat-openbsd
+    apk add --no-cache --update bash confd squid
 
 # Redirect squid access logs to stdout
 RUN ln -sf /dev/stdout /var/log/squid/access.log
