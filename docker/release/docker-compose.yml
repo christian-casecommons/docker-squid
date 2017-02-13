@@ -10,4 +10,6 @@ services:
     ports:
       - "3128"
     environment:
+      NO_WHITELIST: ${NO_WHITELIST}
+      SQUID_WHITELIST: ${SQUID_WHITELIST}
       SHUTDOWN_LIFETIME: "0"

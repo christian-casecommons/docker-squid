@@ -7,6 +7,8 @@ AWS_ACCOUNT_ID ?= 429614120872
 DOCKER_LOGIN_EXPRESSION ?= $$(aws ecr get-login --registry-ids $(AWS_ACCOUNT_ID))
 
 # Release settings
+export SQUID_WHITELIST ?= 
+export NO_WHITELIST ?= false
 
 # Common settings
 include Makefile.settings
