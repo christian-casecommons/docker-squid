@@ -40,12 +40,14 @@ http_access deny manager
 # web applications running on the proxy server who think the only
 # one who can access services on "localhost" is a local user
 #http_access deny to_localhost
+{{- if ne (getv "/no/whitelist" "false") "true" }}
 
 #
 # INSERT YOUR OWN RULE(S) HERE TO ALLOW ACCESS FROM YOUR CLIENTS
 #
 acl whitelist dstdomain "/etc/squid/whitelist.txt"
 http_access allow whitelist localnet
+{{- end }}
 
 acl status_200 http_status 200
 acl status_301 http_status 301
@@ -60,9 +62,11 @@ http_reply_access allow status_200
 # from where browsing should be allowed
 #http_access allow localnet
 #http_access allow localhost
+{{- if ne (getv "/no/whitelist" "false") "true" }}
 
 # And finally deny all other access to this proxy
 http_access deny all
+{{- end }}
 
 # Squid normally listens to port 3128
 http_port 0.0.0.0:3128

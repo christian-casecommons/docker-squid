@@ -3,5 +3,6 @@
  dest  = "/etc/squid/squid.conf"
  keys  = [
   "/allowed/cidrs",
-  "/shutdown/lifetime"
+  "/shutdown/lifetime",
+  "/no/whitelist"
  ]
