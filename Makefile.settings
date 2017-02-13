@@ -19,8 +19,8 @@ DOCKER_REGISTRY_AUTH ?=
 DOCKER_LOGIN_EXPRESSION ?= $$(docker login -u $$DOCKER_USER -p $$DOCKER_PASSWORD $(DOCKER_REGISTRY_AUTH))
 
 # Arguments
-NOPULL_ARG = $(findstring :nopull,$(ARGS))
-VERBOSE_ARG = $(findstring :verbose,$(ARGS))
+NOPULL_ARG = $(findstring /nopull,$(ARGS))
+VERBOSE_ARG = $(findstring /verbose,$(ARGS))
 RELEASE_ARGS = -p $(REL_PROJECT) -f $(REL_COMPOSE_FILE) $(VERBOSE_FLAG)
 TEST_ARGS = -p $(TEST_PROJECT) -f $(TEST_COMPOSE_FILE) $(VERBOSE_FLAG)
 VERBOSE_FLAG = $(if $(VERBOSE_ARG),--verbose,)
@@ -37,7 +37,7 @@ export APP_VERSION ?= $(COMMIT_TIMESTAMP).$(COMMIT_ID)$(if $(BUILD_ID),.$(BUILD_
 
 # Docker host settings
 DOCKER_HOST_IP := $(shell echo $$DOCKER_HOST | awk -F/ '{printf $$3}' | awk -F: '{printf $$1}')
-DOCKER_HOST_IP := $(if $(DOCKER_HOST_IP),$(DOCKER_HOST_IP),\<docker-host\>)
+DOCKER_HOST_IP := $(if $(DOCKER_HOST_IP),$(DOCKER_HOST_IP),localhost)
 
 # Cosmetics
 RED := "\e[1;31m"
