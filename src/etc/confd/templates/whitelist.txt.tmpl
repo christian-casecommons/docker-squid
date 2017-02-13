@@ -11,8 +11,10 @@ route53.amazonaws.com
 route53domains.us-east-1.amazonaws.com
 devicefarm.us-west-2.amazonaws.com
 importexport.amazonaws.com
-{{ if and (exists "/squid/whitelist") ((getv "/squid/whitelist" "%") ne "%") -}}
-{{- range $entry := split (getv "/squid/whitelist") "," -}}
+{{ with $whitelist := (getv "/squid/whitelist" "%") -}}
+{{ if and (ne $whitelist "%") (ne $whitelist "") -}}
+{{- range $entry := split $whitelist "," -}}
 {{$entry}}
 {{ end -}}
-{{ end }}
+{{- end -}}
+{{- end -}}
