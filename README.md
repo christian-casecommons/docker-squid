@@ -133,3 +133,18 @@ The following table defines environment variables control the configuration of c
 | SQUID_WHITELIST      | No       |                | Comma separated list of whitelisted domains.  Note that this whitelist adds the default whitelist that permits access to AWS services.                    | .casecommons.org,.google.com |
 | AWS_REGIONS          | No       | us-west-2      | Comma separate list of regions that the whitelist should perform for access to AWS services.  This only affects AWS services that are regional in nature. | ap-southeast-2,us-west-2     |
 | ALLOWED_CIDRS        | No       | RFC1918 ranges | Comma separated list of allowed CIDR ranges permitted to use the Proxy.  This typically should be set to the CIDR block range of your VPC.                | 192.168.200.0/20             |
+
+## License
+
+Copyright (C) 2017.  Case Commons, Inc.
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+See www.gnu.org/licenses/agpl.html
