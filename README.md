@@ -124,7 +124,7 @@ devicefarm.us-west-2.amazonaws.com
 importexport.amazonaws.com
 ```
 
-### Squid Configuration 
+### Squid Configuration
 
 The following table defines environment variables control the configuration of containers created from this image.
 
@@ -148,3 +148,10 @@ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 
 See www.gnu.org/licenses/agpl.html
+
+## Release Notes
+
+### Version 0.0.1
+
+- **BUG FIX** : Added env AWS_REGIONS, with default, to Makefile and included in docker-compose environments stanza `https://github.com/Casecommons/docker-squid/pull/1`
+
