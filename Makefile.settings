@@ -16,7 +16,7 @@ DOCKER_REGISTRY ?= docker.io
 DOCKER_REGISTRY_AUTH ?=
 
 # Expression to login to Docker registry
-DOCKER_LOGIN_EXPRESSION ?= $$(docker login -u $$DOCKER_USER -p $$DOCKER_PASSWORD $(DOCKER_REGISTRY_AUTH))
+DOCKER_LOGIN_EXPRESSION := eval $$(aws ecr get-login --no-include-email --registry-ids $(AWS_ACCOUNT_ID))
 
 # Arguments
 NOPULL_ARG = $(findstring /nopull,$(ARGS))
@@ -104,3 +104,20 @@ check_exit_code = exit $(call get_exit_code,$(1),$(2))
 # Dangling image function
 # Syntax: $(call clean_dangling_images,<repository>)
 clean_dangling_images = docker images -q -f dangling=true -f label=application=$(1) | xargs -I ARGS docker rmi -f ARGS || true
+
+# AWS assume role settings
+# Attempts to assume IAM role using STS
+# Syntax: $(call assume_role,<role-arn>)
+get_caller_id = aws sts get-caller-identity
+get_jq_expression = jq --null-input '$(1)' | jq '$(2)' -r
+get_assume_session = aws sts assume-role --role-arn=arn:aws:iam::$(1):role/$(2) --role-session-name=$(3)
+get_assume_credential = jq --null-input '$(1)' | jq .Credentials.$(2) -r
+define assume_role
+  $(eval AWS_CALLER_ID = $(shell $(call get_caller_id)))
+  $(eval AWS_ACCOUNT_ID = $(shell $(call get_jq_expression,$(AWS_CALLER_ID),.Account)))
+  $(eval AWS_USER_ID = $(shell $(call get_jq_expression,$(AWS_CALLER_ID),.Arn) | awk -F/ '{print $$NF}'))
+  $(eval AWS_SESSION = $(shell $(call get_assume_session,$(AWS_ACCOUNT_ID),$(1),$(AWS_USER_ID))))
+  $(eval export AWS_ACCESS_KEY_ID = $(shell $(call get_assume_credential,$(AWS_SESSION),AccessKeyId)))
+  $(eval export AWS_SECRET_ACCESS_KEY = $(shell $(call get_assume_credential,$(AWS_SESSION),SecretAccessKey)))
+  $(eval export AWS_SESSION_TOKEN = $(shell $(call get_assume_credential,$(AWS_SESSION),SessionToken)))
+endef

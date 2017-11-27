@@ -2,17 +2,18 @@
 export PROJECT_NAME ?= squid
 export AWS_REGIONS ?= us-east-1
 
-ORG_NAME ?= cwds
+ORG_NAME ?= casecommons
 REPO_NAME ?= squid
-DOCKER_REGISTRY ?= 429614120872.dkr.ecr.us-west-2.amazonaws.com
-AWS_ACCOUNT_ID ?= 429614120872
-DOCKER_LOGIN_EXPRESSION ?= $$(aws ecr get-login --registry-ids $(AWS_ACCOUNT_ID))
+DOCKER_REGISTRY ?= 334274607422.dkr.ecr.us-east-1.amazonaws.com
+AWS_ACCOUNT_ID ?= 334274607422
+ENV ?= nil
 
 # Release settings
 export SQUID_WHITELIST ?=
 export NO_WHITELIST ?= false
 
 # Common settings
+-include .env/$(ENV)
 include Makefile.settings
 
 .PHONY: version release clean tag tag%default login logout publish compose all
@@ -57,7 +58,8 @@ tag%default:
 # Login to Docker registry
 login:
 	${INFO} "Logging in to Docker registry $$DOCKER_REGISTRY..."
-	@ eval $(DOCKER_LOGIN_EXPRESSION)
+	@ $(if $(AWS_ROLE),$(call assume_role,$(AWS_ROLE)),)
+	@ $(DOCKER_LOGIN_EXPRESSION)
 	${INFO} "Logged in to Docker registry $$DOCKER_REGISTRY"
 
 # Logout of Docker registry
@@ -69,7 +71,7 @@ logout:
 # Publishes image(s) tagged using make tag commands
 publish:
 	${INFO} "Publishing release image to $(DOCKER_REGISTRY)/$(ORG_NAME)/$(REPO_NAME)..."
-	@ for tag in $(call get_repo_tags,$(RELEASE_ARGS),squid,$(DOCKER_REGISTRY)/$(ORG_NAME)/$(REPO_NAME)); do echo $$tag | xargs -I TAG docker push TAG; done
+	@ docker push $(DOCKER_REGISTRY)/$(ORG_NAME)/$(REPO_NAME)
 	${INFO} "Publish complete"
 
 # Streams logs
