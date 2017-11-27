@@ -12,4 +12,5 @@ services:
     environment:
       NO_WHITELIST: ${NO_WHITELIST}
       SQUID_WHITELIST: ${SQUID_WHITELIST}
+      AWS_REGIONS: ${AWS_REGIONS}
       SHUTDOWN_LIFETIME: "0"

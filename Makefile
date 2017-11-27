@@ -1,5 +1,7 @@
 # Project variables
 export PROJECT_NAME ?= squid
+export AWS_REGIONS ?= us-east-1
+
 ORG_NAME ?= cwds
 REPO_NAME ?= squid
 DOCKER_REGISTRY ?= 429614120872.dkr.ecr.us-west-2.amazonaws.com
@@ -7,7 +9,7 @@ AWS_ACCOUNT_ID ?= 429614120872
 DOCKER_LOGIN_EXPRESSION ?= $$(aws ecr get-login --registry-ids $(AWS_ACCOUNT_ID))
 
 # Release settings
-export SQUID_WHITELIST ?= 
+export SQUID_WHITELIST ?=
 export NO_WHITELIST ?= false
 
 # Common settings
