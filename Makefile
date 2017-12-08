@@ -1,9 +1,8 @@
 # Project variables
 export PROJECT_NAME ?= squid
 export AWS_REGIONS ?= us-east-1
-
-ORG_NAME ?= casecommons
-REPO_NAME ?= squid
+export ORG_NAME ?= casecommons
+REPO_NAME ?= $(PROJECT_NAME)
 DOCKER_REGISTRY ?= 334274607422.dkr.ecr.us-east-1.amazonaws.com
 AWS_ACCOUNT_ID ?= 334274607422
 ENV ?= nil
@@ -16,7 +15,10 @@ export NO_WHITELIST ?= false
 -include .env/$(ENV)
 include Makefile.settings
 
-.PHONY: version release clean tag tag%default login logout publish compose all
+.PHONY: all orchestrate version release clean tag tag%default login logout publish compose
+all:
+	# do nothing
+orchestrate: login release tag-default publish clean logout
 
 # Prints version
 version:
@@ -34,8 +36,6 @@ release:
 	${INFO} "Release environment created"
 	${INFO} "Squid is running at http://$(DOCKER_HOST_IP):$(call get_port_mapping,$(RELEASE_ARGS),squid,3128)"
 
-# Executes a full workflow
-all: clean release tag-default login publish clean
 
 # Cleans environment
 clean:
@@ -48,7 +48,7 @@ clean:
 # 'make tag <tag> [<tag>...]' tags development and/or release image with specified tag(s)
 tag:
 	${INFO} "Tagging release image with tags $(TAG_ARGS)..."
-	@ $(foreach tag,$(TAG_ARGS), echo $(call get_image_id,$(RELEASE_ARGS),squid) | xargs -I ARG docker tag ARG $(DOCKER_REGISTRY)/$(ORG_NAME)/$(REPO_NAME):$(tag);)
+	@ $(foreach tag,$(TAGS),docker tag $(ORG_NAME)/$(REPO_NAME):latest $(DOCKER_REGISTRY)/$(ORG_NAME)/$(REPO_NAME):$(tag);)
 	${INFO} "Tagging complete"
 
 # Tags with default set of tags
