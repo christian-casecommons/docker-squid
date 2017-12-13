@@ -151,6 +151,10 @@ See www.gnu.org/licenses/agpl.html
 
 ## Release Notes
 
+### Version 1.0.0
+
+ - **NEW FEATURE**: Added support for cbp acceptance and cross-regional deploys
+
 ### Version 0.0.1
 
 - **BUG FIX** : Added env AWS_REGIONS, with default, to Makefile and included in docker-compose environments stanza `https://github.com/Casecommons/docker-squid/pull/1`

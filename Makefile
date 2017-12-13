@@ -36,7 +36,6 @@ release:
 	${INFO} "Release environment created"
 	${INFO} "Squid is running at http://$(DOCKER_HOST_IP):$(call get_port_mapping,$(RELEASE_ARGS),squid,3128)"
 
-
 # Cleans environment
 clean:
 	${INFO} "Destroying release environment..."
