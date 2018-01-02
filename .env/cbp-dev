@@ -3,3 +3,5 @@ AWS_ACCOUNT_ID=334274607422
 export AWS_REGION=us-east-1
 export AWS_DEFAULT_REGION=us-east-1
 export AWS_REGIONS=us-east-1
+export SQUID_WHITELIST=*.acceptance.casebookplatform.org,*.okta.com,*.us-east-1.amazonaws.com,api.dev.casebookplatform.org
+export NO_WHITELIST=false

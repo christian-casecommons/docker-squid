@@ -8,7 +8,7 @@ services:
       args:
         app_name: ${PROJECT_NAME}
     ports:
-      - "3128"
+      - 3128
     environment:
       NO_WHITELIST: ${NO_WHITELIST}
       SQUID_WHITELIST: ${SQUID_WHITELIST}
@@ -16,3 +16,10 @@ services:
       SHUTDOWN_LIFETIME: "0"
     container_name: ${ORG_NAME}-${PROJECT_NAME}
     image: ${ORG_NAME}/${PROJECT_NAME}
+    networks:
+      - casecommons
+
+networks:
+  casecommons:
+    external:
+      name: casecommons

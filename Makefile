@@ -8,7 +8,7 @@ AWS_ACCOUNT_ID ?= 334274607422
 ENV ?= nil
 
 # Release settings
-export SQUID_WHITELIST ?=
+export SQUID_WHITELIST ?= *.acceptance.casebookplatform.org,*.okta.com
 export NO_WHITELIST ?= false
 
 # Common settings
